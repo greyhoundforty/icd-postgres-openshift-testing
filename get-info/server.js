@@ -49,14 +49,14 @@ var config = {
 var cos = new IBM.S3(config);
 
 let itemName = "postgres-binding.json";
-let psqlCredentials = JSON.parse(process.env.postgresbinding);
+// let psqlCredentials = JSON.parse(process.env.postgresbinding);
 
 function createTextFile() {
     console.log(`Creating new item: ${itemName}`);
     return cos.putObject({
         Bucket: process.env.bucket, 
         Key: itemName, 
-        Body: psqlCredentials 
+        Body: process.env.postgresbinding 
     }).promise()
     .then(() => {
         console.log(`Item: ${itemName} created!`);
