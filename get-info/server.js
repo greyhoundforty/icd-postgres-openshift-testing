@@ -65,15 +65,15 @@ const IBM = require('ibm-cos-sdk');
 let coscredentials = process.env.ibmcos
 
 var config = {
-    endpoint: coscredentials.endpoint,
-    apiKeyId: coscredentials.apikey,
-    serviceInstanceId: coscredentials.crn,
+    endpoint: process.env.endpoint,
+    apiKeyId: process.env.apikey,
+    serviceInstanceId: process.env.crn,
     signatureVersion: 'iam',
 };
 
 
 
-var bucketName = coscredentials.bucket;
+var bucketName = process.env.bucket;
 
 var itemName = nodejsbinding;
 
