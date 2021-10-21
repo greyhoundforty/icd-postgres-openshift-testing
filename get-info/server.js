@@ -30,6 +30,8 @@ app.use(
     })
 );
 
+
+
 // Util is handy to have around, so thats why that's here.
 const util = require('util')
 
@@ -57,6 +59,36 @@ let credentials = JSON.parse(process.env.postgresbinding);
 app.listen(port, function() {
     console.log(credentials.postgres);
 });
+
+const IBM = require('ibm-cos-sdk');
+
+var config = {
+    endpoint: process.env.ibmcos.endpoint,
+    apiKeyId: process.env.ibmcos.apikey,
+    serviceInstanceId: process.env.ibmcos.crn,
+    signatureVersion: 'iam',
+};
+
+var bucketName = process.env.ibmcos.bucket;
+
+var itemName = nodejsbinding;
+
+var cos = new IBM.S3(config);
+
+function createTextFile(bucketName, itemName, fileText) {
+    console.log(`Creating new item: ${itemName}`);
+    return cos.putObject({
+        Bucket: bucketName, 
+        Key: itemName, 
+        Body: process.env.postgresbinding
+    }).promise()
+    .then(() => {
+        console.log(`Item: ${itemName} created!`);
+    })
+    .catch((e) => {
+        console.error(`ERROR: ${e.code} - ${e.message}\n`);
+    });
+}
 
 // // We now take the first bound PostgreSQL service and extract its credentials object from BINDING
 // let postgresconn = credentials.connection.postgres;
