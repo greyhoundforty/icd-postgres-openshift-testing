@@ -62,8 +62,6 @@ app.listen(port, function() {
 
 const IBM = require('ibm-cos-sdk');
 
-let coscredentials = process.env.ibmcos
-
 var config = {
     endpoint: process.env.endpoint,
     apiKeyId: process.env.apikey,
@@ -71,16 +69,25 @@ var config = {
     signatureVersion: 'iam',
 };
 
-var bucketName = process.env.bucket;
+let port = process.env.PORT || 8080;
 
 var cos = new IBM.S3(config);
 
-function createTextFile(bucketName, fileText) {
-    console.log(`Creating new item: nodejsbinding`);
+// Route for a health check
+app.get('/healthz', function(req, res) {
+    res.send('OK!');
+});
+
+var itemName = "postgres-binding.json";
+var bucketName = process.env.bucket;
+let psqlCredentials = JSON.parse(process.env.postgresbinding);
+
+function createTextFile(bucketName, itemName) {
+    console.log(`Creating new item: ${itemName}`);
     return cos.putObject({
         Bucket: bucketName, 
-        Key: nodejsbinding, 
-        Body: process.env.postgresbinding
+        Key: itemName, 
+        Body: psqlCredentials 
     }).promise()
     .then(() => {
         console.log(`Item: ${itemName} created!`);
@@ -89,3 +96,5 @@ function createTextFile(bucketName, fileText) {
         console.error(`ERROR: ${e.code} - ${e.message}\n`);
     });
 }
+
+createTextFile();
