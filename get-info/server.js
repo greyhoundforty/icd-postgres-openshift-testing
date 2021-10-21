@@ -33,9 +33,9 @@ app.get('/healthz', function(req, res) {
 let credentials = JSON.parse(process.env.postgresbinding);
 let port = process.env.PORT || 8080;
 
-// app.listen(port, function() {
-//     console.log(credentials.postgres);
-// });
+app.listen(port, function() {
+    console.log("Writing files to ICOS");
+});
 
 const IBM = require('ibm-cos-sdk');
 
@@ -48,22 +48,40 @@ var config = {
 
 var cos = new IBM.S3(config);
 
-let itemName = "postgres-binding.json";
+let operatorItemName = "operator-binding.json";
 // let psqlCredentials = JSON.parse(process.env.postgresbinding);
 
-function createTextFile() {
-    console.log(`Creating new item: ${itemName}`);
+function createOperatorBindingFile() {
+    console.log(`Creating new item: ${operatorItemName}`);
     return cos.putObject({
         Bucket: process.env.bucket, 
-        Key: itemName, 
+        Key: operatorItemName, 
         Body: process.env.postgresbinding 
     }).promise()
     .then(() => {
-        console.log(`Item: ${itemName} created!`);
+        console.log(`Item: ${operatorItemName} created!`);
     })
     .catch((e) => {
         console.error(`ERROR: ${e.code} - ${e.message}\n`);
     });
 }
 
-createTextFile();
+let serviceItemName = "service-binding.json";
+
+function createServiceBindingFile() {
+    console.log(`Creating new item: ${serviceItemName}`);
+    return cos.putObject({
+        Bucket: process.env.bucket, 
+        Key: serviceItemName, 
+        Body: process.env.binding-postgresql-operator-service 
+    }).promise()
+    .then(() => {
+        console.log(`Item: ${serviceItemName} created!`);
+    })
+    .catch((e) => {
+        console.error(`ERROR: ${e.code} - ${e.message}\n`);
+    });
+}
+
+createOperatorBindingFile();
+createServiceBindingFile();
