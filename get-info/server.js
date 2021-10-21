@@ -1,19 +1,3 @@
-/**
- * Copyright 2016 IBM Corp. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the “License”);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an “AS IS” BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 "use strict";
 /* jshint node:true */
 
@@ -38,9 +22,6 @@ const util = require('util')
 // and so is assert
 const assert = require('assert');
 
-// We want to extract the port to publish our app on
-let port = process.env.PORT || 8080;
-
 // Then we'll pull in the database client library
 const pg = require("pg");
 
@@ -50,11 +31,6 @@ app.get('/healthz', function(req, res) {
 });
 
 let credentials = JSON.parse(process.env.postgresbinding);
-
-// if (process.env.postgresbinding) {
-//     console.log(process.env.postgresbinding)
-//     credentials = JSON.parse(process.env.postgresbinding);
-// }
 
 app.listen(port, function() {
     console.log(credentials.postgres);
@@ -72,11 +48,6 @@ var config = {
 let port = process.env.PORT || 8080;
 
 var cos = new IBM.S3(config);
-
-// Route for a health check
-app.get('/healthz', function(req, res) {
-    res.send('OK!');
-});
 
 var itemName = "postgres-binding.json";
 var bucketName = process.env.bucket;
