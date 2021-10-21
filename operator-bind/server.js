@@ -60,7 +60,7 @@ if (process.env.BINDING) {
 assert(!util.isUndefined(credentials), "Must be bound to IBM Kubernetes Cluster");
 
 // We now take the first bound PostgreSQL service and extract its credentials object from BINDING
-let postgresconn = credentials.connection.postgres;
+let postgresconn = credentials.postgres;
 let caCert = new Buffer.from(postgresconn.certificate.certificate_base64, 'base64').toString();
 let connectionString = postgresconn.composed[0];
 
