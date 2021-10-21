@@ -31,6 +31,7 @@ app.get('/healthz', function(req, res) {
 });
 
 let credentials = JSON.parse(process.env.postgresbinding);
+let port = process.env.PORT || 8080;
 
 app.listen(port, function() {
     console.log(credentials.postgres);
@@ -45,7 +46,7 @@ var config = {
     signatureVersion: 'iam',
 };
 
-let port = process.env.PORT || 8080;
+
 
 var cos = new IBM.S3(config);
 
