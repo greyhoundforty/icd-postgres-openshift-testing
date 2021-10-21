@@ -57,7 +57,7 @@ if (process.env.BINDING) {
     credentials = JSON.parse(process.env.BINDING);
 }
 
-assert(!util.isUndefined(credentials), "Must be bound to IBM Kubernetes Cluster");
+// assert(!util.isUndefined(credentials), "Must be bound to IBM Kubernetes Cluster");
 
 // We now take the first bound PostgreSQL service and extract its credentials object from BINDING
 let postgresconn = credentials.connection.postgres;

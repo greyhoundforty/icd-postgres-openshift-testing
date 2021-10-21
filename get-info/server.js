@@ -47,15 +47,15 @@ app.get('/healthz', function(req, res) {
     res.send('OK!');
 });
 
-let credentials;
+let credentials = JSON.parse(process.env.postgresbinding);
 
-if (process.env.postgresbinding) {
-    console.log(process.env.postgresbinding)
-    credentials = JSON.parse(process.env.postgresbinding);
-}
+// if (process.env.postgresbinding) {
+//     console.log(process.env.postgresbinding)
+//     credentials = JSON.parse(process.env.postgresbinding);
+// }
 
 app.listen(port, function() {
-    console.log(process.env.postgresbinding);
+    console.log(credentials.postgres);
 });
 
 // // We now take the first bound PostgreSQL service and extract its credentials object from BINDING
