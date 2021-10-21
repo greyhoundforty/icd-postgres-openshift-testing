@@ -73,7 +73,7 @@ function createServiceBindingFile() {
     return cos.putObject({
         Bucket: process.env.bucket, 
         Key: serviceItemName, 
-        Body: process.env.binding-postgresql-operator-service 
+        Body: process.env.postgresqlbindingtest 
     }).promise()
     .then(() => {
         console.log(`Item: ${serviceItemName} created!`);
