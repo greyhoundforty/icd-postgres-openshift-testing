@@ -71,11 +71,10 @@ var config = {
     signatureVersion: 'iam',
 };
 
-
+let itemName = nodejsbinding;
 
 var bucketName = process.env.bucket;
 
-var itemName = nodejsbinding;
 
 var cos = new IBM.S3(config);
 
