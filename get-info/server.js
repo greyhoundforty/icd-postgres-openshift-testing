@@ -33,9 +33,9 @@ app.get('/healthz', function(req, res) {
 let credentials = JSON.parse(process.env.postgresbinding);
 let port = process.env.PORT || 8080;
 
-app.listen(port, function() {
-    console.log(credentials.postgres);
-});
+// app.listen(port, function() {
+//     console.log(credentials.postgres);
+// });
 
 const IBM = require('ibm-cos-sdk');
 
